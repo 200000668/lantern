@@ -2,6 +2,7 @@ import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -26,14 +27,17 @@ public class Game {
             terminal.putCharacter('X');
             terminal.setCursorVisible(false);
             screen = new TerminalScreen(terminal);
+
+            screen.setCursorPosition(null);
+            screen.startScreen();
+            screen.doResizeIfNecessary();
             Boolean game = true;
             while (game){
                 KeyStroke key = terminal.readInput();
+                if (key.getKeyType() == KeyType.Character && key.getCharacter() == ('q')) game = false;
                 player.move(key);
-                terminal.setCursorPosition(player.getPosition().getX(), player.getPosition().getY());
-                terminal.putCharacter('X');
-                screen = new TerminalScreen(terminal);
                 screen.refresh();
+                player.draw(screen.newTextGraphics());
                 }
 
             terminal.close();
@@ -41,5 +45,11 @@ public class Game {
         catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void draw() throws IOException{
+        screen.clear();
+        maze.draw(screen.newTextGraphics());
+        screen.refresh();
     }
 }

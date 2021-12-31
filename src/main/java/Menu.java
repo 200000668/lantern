@@ -22,13 +22,13 @@ public class Menu {
             terminal.setForegroundColor(TextColor.Factory.fromString("#50"));
             terminal.enableSGR(SGR.BOLD);
             terminal.setCursorPosition(10, 5);
-            terminal.putString("1. Start New Game");
+            terminal.putString("1 → Start New Game");
             terminal.setCursorPosition(10, 6);
-            terminal.putString("2. Select Maze");
+            terminal.putString("2 → Select Maze");
             terminal.setCursorPosition(10, 7);
-            terminal.putString("3. Quit");
+            terminal.putString("3 → Quit");
             terminal.setCursorVisible(false);
-
+            terminal.putCharacter(' ');
             Boolean game = true;
             while (game){
                 KeyStroke key = terminal.readInput();
